@@ -13,6 +13,11 @@
                     <x-fas-play wire:loading.remove wire:target="draw" class="h-4 w-4 text-white" />
                     <x-fas-spinner wire:loading wire:target="draw" class="h-4 w-4 animate-spin text-white" />
                 </button>
+
+                <button type="button" class="h-8 w-8 mr-2 hover:bg-red-200 bg-red-400 rounded-full flex items-center justify-center disabled:opacity-25" wire:loading.attr="disabled" wire:click="clear">
+                    <x-fas-trash wire:loading.remove wire:target="clear" class="h-4 w-4 text-white" />
+                    <x-fas-spinner wire:loading wire:target="clear" class="h-4 w-4 animate-spin text-white" />
+                </button>
             @else
                 @if($this->player->bingo)
                     <button type="button" class="h-8 w-8 mr-2 hover:bg-red-200 bg-red-400 rounded-full flex items-center justify-center disabled:opacity-25" wire:loading.attr="disabled" wire:click="bingo">

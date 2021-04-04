@@ -30,6 +30,17 @@ class Index extends Component
         }
     }
 
+    public function clear()
+    {
+        if ($this->controller) {
+            DB::transaction(function () {
+                $this->room->draws()->detach();
+                $this->room->lastDraw()->disassociate();
+                $this->room->save();
+            });
+        }
+    }
+
     public function toggleSelect(int $id)
     {
         if (! $this->isSelected($id)) {
@@ -43,7 +54,7 @@ class Index extends Component
 
     public function isSelected(int $id)
     {
-        return $this->selected->filter(fn (Word $word) => $word->id === $id)->isNotEmpty();
+        return $this->selected->filter(fn(Word $word) => $word->id === $id)->isNotEmpty();
     }
 
     public function bingo()
