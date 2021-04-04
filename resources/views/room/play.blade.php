@@ -1,11 +1,11 @@
 <div class="flex flex-col lg:flex-row justify-center items-center lg:items-start" wire:poll.5s="heartbeat">
     @if($this->player->exists)
         <div class="mr-4">
-            @livewire('player.index', ['room' => $room, 'player' => $player])
+            @livewire('player.index', ['room' => $room, 'player' => $player, 'controller' => false])
         </div>
 
         <div>
-            @livewire('card.index', ['words' => $player->card->words, 'player' => $player, 'controller' => false])
+            @livewire('card.index', ['room' => $room, 'words' => $player->card->words, 'player' => $player, 'controller' => false])
         </div>
     @else
         <div class="min-h-screen flex flex-col justify-center items-center pt-6 pr-6 pl-6 bg-gray-100">

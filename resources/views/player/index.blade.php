@@ -11,14 +11,18 @@
             <div class="flex-1 mr-2 ml-2">E</div>
             <div class="flex-1 mr-2 ml-2">S</div>
         </header>
+        <div>
+        </div>
         <article class="flex-col flex-wrap">
             @foreach ($this->room->connectedPlayers as $player)
                 <div class="flex-1">
                     <div
-                        class="flex w-full h-full p-6 bg-white border-2 border-gray-300 rounded-md tracking-wide justify-center items-center">
+                        class="flex w-full h-full p-6 bg-white border-2 border-gray-300 rounded-md tracking-wide justify-center items-center {{ $player->bingo && ! $this->controller ? 'animate-pulse bg-yellow-200' : '' }} {{ $player->bingo ? $this->controller && $this->bingConfirmed($player) ?  'animate-pulse bg-green-200' : 'animate-pulse bg-red-200' : '' }}">
                         <h4 class="flex break-all w-32 text-sm justify-center items-center text-center font-semibold">
                             @if(isset($this->player) && $player->is($this->player))
-                                <x-fas-user class="h-4 w-4 mr-1" />
+                                <x-fas-arrow-right class="h-4 w-4 mr-1 text-green-600" />
+                            @else
+                                <x-fas-user class="h-4 w-4 mr-1 text-green-600" />
                             @endif
 
                             <span>{{ $player->name }}</span>

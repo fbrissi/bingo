@@ -26,7 +26,7 @@
                 <x-jet-input id="word" type="text" class="mt-1 block w-full" wire:model.defer="word" />
                 <button type="button" class="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" wire:click="addWord">
                     <x-fas-plus wire:loading.remove wire:target="addWord" class="h-4 w-4 text-white" />
-                    <x-fas-spinner wire:loading wire:target="addWord" class="h-4 w-4 animate-spin" />
+                    <x-fas-spinner wire:loading wire:target="addWord" class="h-4 w-4 animate-spin text-white" />
                 </button>
             </div>
             <div class="flex flex-wrap max-w-2xl mt-6 px-6 py-4 bg-gray-200 shadow-md sm:rounded-lg">
@@ -35,7 +35,7 @@
                         {{ $word }}
                         <button type="button" class="h-4 w-4 ml-2 hover:bg-red-200 bg-red-400 rounded-full flex items-center justify-center disabled:opacity-25" wire:loading.attr="disabled" wire:click="removeWord({{ $loop->index }})">
                             <x-fas-plus wire:loading.remove wire:target="removeWord({{ $loop->index }})" class="h-2 w-2 text-white" />
-                            <x-fas-spinner wire:loading wire:target="removeWord({{ $loop->index }})" class="h-2 w-2 animate-spin" />
+                            <x-fas-spinner wire:loading wire:target="removeWord({{ $loop->index }})" class="h-2 w-2 animate-spin text-white" />
                         </button>
                     </span>
                 @endforeach

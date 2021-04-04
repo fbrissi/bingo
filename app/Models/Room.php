@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $id
  * @property string $name
  * @property string $description
+ * @property int $draw_id
+ * @property Word $lastDraw
  * @property \Illuminate\Support\Collection<Word> $words
  * @property \Illuminate\Support\Collection<Word> $draws
  * @property \Illuminate\Support\Collection<Player> $connectedPlayers
@@ -25,6 +27,7 @@ class Room extends Model
     protected $fillable = [
         'name',
         'description',
+        'draw_id',
         'created_at',
         'updated_at',
     ];
@@ -32,6 +35,11 @@ class Room extends Model
     public function words()
     {
         return $this->hasMany(Word::class);
+    }
+
+    public function lastDraw()
+    {
+        return $this->belongsTo(Word::class, 'draw_id');
     }
 
     public function draws()

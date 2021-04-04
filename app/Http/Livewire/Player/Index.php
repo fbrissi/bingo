@@ -10,6 +10,13 @@ class Index extends Component
 {
     public Room $room;
     public Player $player;
+    public bool $controller;
+
+    public function bingConfirmed(Player $player)
+    {
+        return $player->checkedWords->count() === $player->card->words->count()
+            && $player->checkedWords->intersect($this->room->draws)->count() > 0;
+    }
 
     public function render()
     {
