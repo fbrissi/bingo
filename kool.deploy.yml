@@ -54,7 +54,7 @@ services:
     # What port to map on deployment
     expose: 6379
     # Tells kool to stop current deploy then start the new one
-    recreate: true
+    recreate: false
     resources:
       requests:
         cpu: 50m
