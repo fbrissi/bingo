@@ -41,8 +41,8 @@
         <article class="flex flex-wrap">
             @foreach ($this->words as $word)
                 <div
-                    disabled="disabled"
                     wire:loading.class="opacity-50"
+                    wire:target="toggleSelect({{ $word->id }})"
                     @if(! $this->controller) wire:click="toggleSelect({{ $word->id }})" @endif
                     class="flex-1 {{ ! $this->controller ? 'cursor-pointer' : '' }}"
                 >

@@ -20,6 +20,7 @@ Route::get('/', function () {
 
 Route::prefix('{room}')->name('room.')->group(function () {
     Route::get('/', [RoomController::class, 'newPlay'])->name('newPlay');
+    Route::get('edit', [RoomController::class, 'edit'])->name('edit');
     Route::get('controller', [RoomController::class, 'controller'])->name('controller');
     Route::get('/{player}', [RoomController::class, 'play'])->name('play');
 });

@@ -20,6 +20,7 @@ class Create extends Component
 
         DB::transaction(function () {
             $this->room->save();
+            $this->room->words()->delete();
             $this->room->words()->createMany($this->words->map( fn ($word) => ['value' => $word]));
         });
 

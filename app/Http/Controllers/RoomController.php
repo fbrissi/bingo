@@ -32,4 +32,11 @@ class RoomController extends Controller
             'controller' => true,
         ]);
     }
+
+    public function edit(Room $room)
+    {
+        return view('room.edit', [
+            'room' => $room,
+        ]);
+    }
 }
