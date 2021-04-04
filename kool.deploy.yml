@@ -1,0 +1,74 @@
+# Here we can override service configurations made at kool.services.yml
+# for deployments only.
+services:
+  app:
+    # Appications requires a special image built for deployment
+    build: kool.deploy.dockerfile
+    # What port to map on deployment
+    expose: 80
+    # Volumes for deployments are different because there is no local data being mounted,
+    # instead we have the source all built in the application image. Therefore here must
+    # define which paths we want to persist.
+    persists:
+      # Size of the volume
+      size: 5Gi
+      # Paths to persist
+      paths:
+        - path: /app/storage
+          # Tells kool to sync the folder from your built image to the persisted storage.
+          sync: true
+          # Sync folder using specific user owner.
+          chown: kool:kool
+    # Tells kool to stop current deploy then start the new one
+    recreate: true
+
+    # Here we can define processes that behave like services and must be run in the deployment only.
+    # Usually this is very helpful for queue workers and that kind of stuff.
+    daemons:
+      - command: [ php, artisan, websockets:serve, --port=3000 ]
+        expose: 3000
+
+    # Tells kool deploy that this service accessible through the deployment url (only one service can be set to public).
+    public:
+      - port: 80
+      - port: 3000
+        path: /ws
+
+    # Before hook is a special section where we can define procedures to be executed
+    # right before a new deployment happens.
+    # before:
+    #   - script_to_run.sh
+
+    # After hook is a special section where we can define procedures to be executed
+    # right after a new deployment finished.
+    after:
+      - [ php, artisan, cache:clear ]
+      - [ php, artisan, config:cache ]
+      - [ php, artisan, route:clear ]
+      - [ php, artisan, view:cache ]
+      - [ php, artisan, migrate, --force, --step ]
+
+    # Cron defines recurrent executions, just like a cronjob.
+    # cron:
+    #   - { schedule: "* * * * *", command: [ php, artisan, schedule:run ] }
+
+    # Environment refers to a file to be used for deployment only and will make those variables
+    # available for the deployed application. There are also some special keys kool deploy will
+    # override in this file upon deployment, i.e the deployed database host.
+    env:
+      source: kool.deploy.env
+      target: /app/.env
+  database:
+    cloud: true
+  cache:
+    # What port to map on deployment
+    port: 6379
+    # Tells kool to stop current deploy then start the new one
+    recreate: true
+    resources:
+      requests:
+        cpu: 50m
+        memory: 50Mi
+      limits:
+        cpu: 100m
+        memory: 100Mi
